@@ -1,0 +1,23 @@
+{
+  "pins" : [
+    {
+      "identity" : "lottie-ios",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/airbnb/lottie-ios.git",
+      "state" : {
+        "revision" : "7fe8b6f697ae7db4bf0df270119592cb5d502848",
+        "version" : "4.4.1"
+      }
+    },
+    {
+      "identity" : "sdwebimage",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/SDWebImage/SDWebImage.git",
+      "state" : {
+        "revision" : "f6afa0132961d593f07970d84e2d8b588c29ea04",
+        "version" : "5.19.1"
+      }
+    }
+  ],
+  "version" : 2
+}

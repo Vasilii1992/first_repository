@@ -1,0 +1,73 @@
+/* 
+  Localizable.strings
+  Restaurant
+
+  Created by Василий Тихонов on 12.05.2024.
+  
+*/
+"Food" = "Еда";
+"Alcohol" = "Алкогольные";
+"Non-Alcoholic" = "Безалкогольные";
+"Drinks" = "Напитки";
+"About Us" = "О Нас";
+"Beer" = "Пиво";
+"Vodka" = "Водка";
+"Whiskey" = "Виски";
+"Brandy" = "Коньяк";
+"Tequila" = "Текила";
+"Gin" = "Джин";
+"Rum" = "Ром";
+"Liquor" = "Ликеры";
+"Cocktails" = "Коктейли";
+"Sparkling Wine" = "Игристое Вино";
+"White Wine" = "Белое Вино";
+"Red Wine" = "Красное Вино";
+"Pink Wine" = "Розовое Вино";
+"Water" = "Вода";
+"Lemonade" = "Лимонад";
+"Juices" = "Соки";
+"Milkshake" = "Молочный Коктейль";
+"Coffee/Tea" = "Кофе/Чай";
+
+"Our Restaurant \nis located in the \nMoskovskie Vorota Hotel \nat the address: \nMoskovsky prospekt 97A.\nWe will be glad \nto see you." = "Наш Ресторан\nнаходится в \nГостинице\n\"Московские Ворота\" \nпо адресу: \nМосковский п-кт 97А \nБудем рады\nВас видеть.";
+
+
+"Burger" = "Бургер";
+"Pizza" = "Пицца";
+"Pasta" = "Паста";
+"Soups" = "Супы";
+"Main" = "Горячее";
+"Dessert" = "Десерт";
+"Salads" = "Салат";
+"Garnish" = "Гарнир";
+
+"Categories" = "Категории";
+"Dishes of the Category" = "Блюда Категории";
+
+"alcoEng" = "alco";
+"notAlcoEng" = "notAlco";
+"foodItemsEng" = "foodItems";
+
+
+
+
+
+
+
+
+
+
+
+/*
+
+        
+     }
+     
+     static var informationLabel = "Наш Ресторан\nнаходится в \nГостинице\n\"Московские Ворота\" \nпо адресу: \nМосковский п-кт 97А \nБудем рады\nВас видеть."
+     static var phoneLabel = "Phone: 8(812)448-20-55"
+     static var privacyPolicy = "Privacy Policy"
+ }
+}
+
+  
+*/
