@@ -48,115 +48,43 @@ final class ViewController: UIViewController,UICollectionViewDelegateFlowLayout 
         fetchFoodDataFromFirebase()
     }
     func fetchFoodDataFromFirebase() {
-        DispatchQueue.main.async {
-            self.loaderAnimationView.isHidden = false
-            self.loaderAnimationView.play()
-        }
+            DispatchQueue.main.async {
+                self.loaderAnimationView.isHidden = false
+                self.loaderAnimationView.play()
+            }
 
-        let db = Firestore.firestore()
-        db.collection(foodItemKey).getDocuments { [weak self] snapshot, error in
-            guard let self = self else { return }
+            APIManager.shared.fetchFoodDataFromFirebase(foodItemKey: foodItemKey) { [weak self] foodItems, error in
+                guard let self = self else { return }
 
-            // Processing data fetch on a background thread
-            DispatchQueue.global(qos: .userInitiated).async {
-                if let error = error {
+                DispatchQueue.global(qos: .userInitiated).async {
+                    if let error = error {
+                        DispatchQueue.main.async {
+                            print("Error getting documents: \(error)")
+                            self.loaderAnimationView.stop()
+                            self.loaderAnimationView.isHidden = true
+                        }
+                        return
+                    }
+
+                    guard let foodItems = foodItems else {
+                        DispatchQueue.main.async {
+                            print("No documents found")
+                            self.loaderAnimationView.stop()
+                            self.loaderAnimationView.isHidden = true
+                        }
+                        return
+                    }
+
+                    MockData.shared.foodForCategory = foodItems
+
                     DispatchQueue.main.async {
-                        print("Error getting documents: \(error)")
+                        self.collectionView.reloadData()
                         self.loaderAnimationView.stop()
                         self.loaderAnimationView.isHidden = true
                     }
-                    return
-                }
-
-                guard let snapshot = snapshot else {
-                    DispatchQueue.main.async {
-                        print("No documents found")
-                        self.loaderAnimationView.stop()
-                        self.loaderAnimationView.isHidden = true
-                    }
-                    return
-                }
-
-                var foodItems: [MenuItem] = []
-                for document in snapshot.documents {
-                    let data = document.data()
-                    guard let title = data["title"] as? String,
-                          let image = data["image"] as? String,
-                          let price = data["price"] as? Int,
-                          let categoryString = data["category"] as? String,
-                          let category = FoodCategory(rawValue: categoryString),
-                          let description = data["description"] as? String else {
-                        continue
-                    }
-
-                    let foodItem = MenuItem(title: title,
-                                            image: image,
-                                            price: price,
-                                            category: category,
-                                            description: description)
-                    foodItems.append(foodItem)
-                }
-
-                // Updating shared data store on background thread
-                MockData.shared.foodForCategory = foodItems
-
-                // Updating UI on main thread
-                DispatchQueue.main.async {
-                    self.collectionView.reloadData()
-                    self.loaderAnimationView.stop()
-                    self.loaderAnimationView.isHidden = true
                 }
             }
         }
-    }
-
-
-//    func fetchFoodDataFromFirebase() {
-//        loaderAnimationView.isHidden = false
-//        loaderAnimationView.play()
-//        let db = Firestore.firestore()
-//        db.collection(foodItemKey).getDocuments { [weak self] snapshot, error in
-//            guard let self = self else { return }
-//            
-//            DispatchQueue.main.async {
-//                 self.loaderAnimationView.stop()
-//                 self.loaderAnimationView.isHidden = true
-//             }
-//            
-//            if let error = error {
-//                print("Error getting documents: \(error)")
-//                return
-//            }
-//            guard let snapshot = snapshot else {
-//                print("No documents found")
-//                return
-//            }
-//
-//            var foodItems: [MenuItem] = []
-//            for document in snapshot.documents {
-//                let data = document.data()
-//                guard let title = data["title"] as? String,
-//                      let image = data["image"] as? String,
-//                      let price = data["price"] as? Int,
-//                      let categoryString = data["category"] as? String,
-//                      let category = FoodCategory(rawValue: categoryString),
-//                      let description = data["description"] as? String else {
-//                    continue
-//                }
-//
-//                let foodItem = MenuItem(title: title,
-//                                        image: image,
-//                                        price: price,
-//                                        category: category,
-//                                        description: description)
-//                foodItems.append(foodItem)
-//            }
-//            MockData.shared.foodForCategory = foodItems
-//            DispatchQueue.main.async {
-//                self.collectionView.reloadData()
-//            }
-//        }
-//    }
 
     private func setupViews() {
         view.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)

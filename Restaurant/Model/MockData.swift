@@ -41,8 +41,7 @@ class MockData {
 /*
  Ты IOS разрабодчик.У нас есть приложение для ресторана, мы получаем данные из базы данных Firebase,но нам нужно сделать так чтобы данные приходили не в основном потоке.
  
- 
- You're an iOS developer.We have an application for a restaurant, we receive data from the Firebase database, but we need to make sure that the data does not come in the main stream.
+ You're an iOS developer.We have an application for a restaurant, we get data from the Firebase database, but the function is in the class itself, and we need to put it in the APIManager.
  
  Implement this using UIKit,programmatically without using a storyboard
  Here is the rest of the code:
@@ -53,227 +52,370 @@ class MockData {
  import FirebaseDatabase
  import FirebaseFirestoreInternal
  import FirebaseFirestore
+ 
+ class APIManager {
+         
+     static let shared = APIManager()
+     
+     private func configureFB() -> Firestore {
+         var db: Firestore!
+         let settings = FirestoreSettings()
+         Firestore.firestore().settings = settings
+         db = Firestore.firestore()
+         return db
+     }
+ }
 
- final class MenuDisplayViewController: UIViewController {
-     
-     private var firebaseDrinks: [FirebaseDrink] = []
-     private var hasLoadedOnce = false
-     private var cellIdentifier = "ExpandableHeaderView"
-     private var alcoKey = "alcoEng".localized()
-     private var nonAlcoKey = "notAlcoEng".localized()
-     
-     
 
+
+
+ final class ViewController: UIViewController,UICollectionViewDelegateFlowLayout {
+
+     private var isDataLoadedForCurrentGroup: Bool = false
+     
+     private var foodItemKey = "foodItemsEng".localized()
+
+     private let collectionView: UICollectionView = {
+         let collectionViewLayout = UICollectionViewLayout()
+         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: collectionViewLayout)
+         collectionView.backgroundColor = .none
+         collectionView.bounces = false
+         collectionView.translatesAutoresizingMaskIntoConstraints = false
+
+         return collectionView
+     }()
      
      private let loaderAnimationView: LottieAnimationView = {
-         let animationView = LottieAnimationView(name: "LoaderForBar")
+         let animationView = LottieAnimationView(name: "Animation")
          animationView.loopMode = .loop
          animationView.translatesAutoresizingMaskIntoConstraints = false
          return animationView
      }()
-
-     private let  myTableView: UITableView = {
-         let tableView = UITableView(frame: .zero, style: .grouped)
-         tableView.tableFooterView = UIView()
-         tableView.backgroundColor = .white
-
-         
-         return tableView
-     }()
+     
+     
+     private var selectedCategory: FoodCategory? = .hotDishes
+     
+     private let saleId = "StoriesCollectionViewCell"
+     private let categoryId = "PopularCollectioniewCell"
+     private let exampleId = "ComingSoonCollectionView"
+     private let headerId = "HeaderSupplementaryView"
+     
+     private let sections = MockData.shared.pageData
 
      override func viewDidLoad() {
          super.viewDidLoad()
-         view.backgroundColor = .white
 
-         registerCells()
-         setupDelegate()
          setupViews()
-         setupConstraints()
-         
-         fetchDataFromFirebase(selectedIndex: 0)
+         setupConstrains()
+         setDelegate()
+         fetchFoodDataFromFirebase()
      }
-     
-      func fetchDataFromFirebase(selectedIndex: Int) {
+     func fetchFoodDataFromFirebase() {
+         DispatchQueue.main.async {
+             self.loaderAnimationView.isHidden = false
+             self.loaderAnimationView.play()
+         }
 
-          if !hasLoadedOnce {
-              loaderAnimationView.isHidden = false
-              loaderAnimationView.play()
-              hasLoadedOnce = true
-          }
          let db = Firestore.firestore()
-          let collectionName = selectedIndex == 0 ? alcoKey : nonAlcoKey
-          
-         db.collection(collectionName).getDocuments { [weak self] snapshot, error in
+         db.collection(foodItemKey).getDocuments { [weak self] snapshot, error in
              guard let self = self else { return }
-             
-             DispatchQueue.main.async {
-                  self.loaderAnimationView.stop()
-                  self.loaderAnimationView.isHidden = true
-              }
 
-             if let error = error {
-                 print("Error getting documents: \(error)")
-                 return
-             }
-
-             guard let snapshot = snapshot else {
-                 print("No documents")
-                 return
-             }
-
-             var drinks: [FirebaseDrink] = []
-             for document in snapshot.documents {
-                 let data = document.data()
-                 guard let subMenuName = data["subMenuName"] as? String,
-                       let subMenuImage = data["subMenuImage"] as? String,
-                       let drinksData = data["menu"] as? [[String: Any]] else {
-                     continue
+             // Processing data fetch on a background thread
+             DispatchQueue.global(qos: .userInitiated).async {
+                 if let error = error {
+                     DispatchQueue.main.async {
+                         print("Error getting documents: \(error)")
+                         self.loaderAnimationView.stop()
+                         self.loaderAnimationView.isHidden = true
+                     }
+                     return
                  }
 
-                 var menu: [NameAndPrice] = []
-                 for drinkData in drinksData {
-                     guard let name = drinkData["name"] as? String,
-                           let description = drinkData["description"] as? String,
-                           let images = drinkData["images"] as? String,
-                           let priceData = drinkData["price"] as? [[String: Any]] else {
+                 guard let snapshot = snapshot else {
+                     DispatchQueue.main.async {
+                         print("No documents found")
+                         self.loaderAnimationView.stop()
+                         self.loaderAnimationView.isHidden = true
+                     }
+                     return
+                 }
+
+                 var foodItems: [MenuItem] = []
+                 for document in snapshot.documents {
+                     let data = document.data()
+                     guard let title = data["title"] as? String,
+                           let image = data["image"] as? String,
+                           let price = data["price"] as? Int,
+                           let categoryString = data["category"] as? String,
+                           let category = FoodCategory(rawValue: categoryString),
+                           let description = data["description"] as? String else {
                          continue
                      }
 
-                     var volumeAndPrices: [VolumeAndPrice] = []
-                     for priceEntry in priceData {
-                         guard let volume = priceEntry["volume"] as? String,
-                               let price = priceEntry["price"] as? Int else {
-                             continue
-                         }
-                         let volumeAndPrice = VolumeAndPrice(volume: volume, price: price)
-                         volumeAndPrices.append(volumeAndPrice)
-                     }
-
-                     let drink = NameAndPrice(name: name,
-                                              price: volumeAndPrices,
-                                              description: description,
-                                              images: images)
-                     menu.append(drink)
+                     let foodItem = MenuItem(title: title,
+                                             image: image,
+                                             price: price,
+                                             category: category,
+                                             description: description)
+                     foodItems.append(foodItem)
                  }
 
-                 let subMenu = SubMenu(subMenuName: subMenuName, subMenuImage: subMenuImage)
-                 let firebaseDrink = FirebaseDrink(subMenu: subMenu,
-                                                   menu: menu,
-                                                   isStatus: false,
-                                                   name: subMenuName,
-                                                   price: [],
-                                                   description: "",
-                                                   images: subMenuImage)
-                 drinks.append(firebaseDrink)
-             }
+                 // Updating shared data store on background thread
+                 MockData.shared.foodForCategory = foodItems
 
-             self.firebaseDrinks = drinks
-             self.myTableView.reloadData()
+                 // Updating UI on main thread
+                 DispatchQueue.main.async {
+                     self.collectionView.reloadData()
+                     self.loaderAnimationView.stop()
+                     self.loaderAnimationView.isHidden = true
+                 }
+             }
          }
      }
 
-    private func setupViews() {
-         self.view.addSubview(myTableView)
-        self.view.addSubview(loaderAnimationView)
 
-     }
-     private func setupDelegate() {
-         myTableView.delegate = self
-         myTableView.dataSource = self
-     }
-     private func registerCells() {
-         myTableView.register(AlcoViewCell.self, forCellReuseIdentifier: AlcoViewCell.identifier)
-     }
-     private func setupConstraints() {
-         myTableView.translatesAutoresizingMaskIntoConstraints = false
-         loaderAnimationView.translatesAutoresizingMaskIntoConstraints = false
 
+     private func setupViews() {
+         view.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
+         view.addSubview(collectionView)
+         collectionView.addSubview(loaderAnimationView)
+
+
+         collectionView.register(SaleCollectionViewCell.self,
+                                 forCellWithReuseIdentifier: saleId)
+         collectionView.register(CategoryCollectionViewCell.self,
+                                 forCellWithReuseIdentifier: categoryId)
+         collectionView.register(ExampleCollectionViewCell.self,
+                                 forCellWithReuseIdentifier: exampleId)
+         collectionView.register(HeaderSupplementaryView.self,
+                                 forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
+                                 withReuseIdentifier: headerId)
+         collectionView.collectionViewLayout = createLayout()
+     }
+     
+     private func setupConstrains() {
          NSLayoutConstraint.activate([
-             myTableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-             myTableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-             myTableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-             myTableView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
              
-             loaderAnimationView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-             loaderAnimationView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
-             loaderAnimationView.widthAnchor.constraint(equalToConstant: 300),
+             collectionView.topAnchor.constraint(equalTo: view.topAnchor, constant: 0),
+             collectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 0),
+             collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 0),
+             collectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 0),
+             
+             loaderAnimationView.centerXAnchor.constraint(equalTo: collectionView.centerXAnchor),
+             loaderAnimationView.centerYAnchor.constraint(equalTo: collectionView.centerYAnchor, constant: 160),
+             loaderAnimationView.widthAnchor.constraint(equalToConstant: 150),
              loaderAnimationView.heightAnchor.constraint(equalToConstant: 300)
+                    
          ])
-     }
- }
- extension MenuDisplayViewController: UITableViewDelegate {
-     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-         return 50
-     }
-     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
          
-         if firebaseDrinks[indexPath.section].isStatus {
-             return 50
-         } else {
-             return 0
+     }
+     
+     private func setDelegate() {
+         collectionView.delegate = self
+         collectionView.dataSource = self
+     }
+     
+   private func createLayout() -> UICollectionViewCompositionalLayout {
+       
+         UICollectionViewCompositionalLayout { [weak self] sectionIndex, _ in
+             guard let self = self else { return nil }
+             let section = self.sections[sectionIndex]
+             switch section {
+                 
+             case .sales(_):
+                 return createSaleSection()
+             case .category(_):
+                 return createCategorySection()
+             case .foodForCategory(_):
+                 return createFoodForCategorySection()
+             }
          }
-  }
+    }
      
-     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-                 let selectedDrink = firebaseDrinks[indexPath.section].menu[indexPath.row]
-                 let drinkDescriptionVC = DrinkDescriptionViewController()
-         drinkDescriptionVC.configureCell(imageURL: selectedDrink.images,
-                                          nameL: selectedDrink.name,
-                                          description: selectedDrink.description)
-         
-                 present(drinkDescriptionVC, animated: true)
-         }
-     
-     
- }
- extension MenuDisplayViewController: UITableViewDataSource {
-     func numberOfSections(in tableView: UITableView) -> Int {
-         return firebaseDrinks.count
+     private func createLayoutSection(group: NSCollectionLayoutGroup,
+                                      behavior: UICollectionLayoutSectionOrthogonalScrollingBehavior,
+                                      interGroupSpasing: CGFloat,
+                                      supplementaryItems: [NSCollectionLayoutBoundarySupplementaryItem],
+                                      contentInsers: Bool) -> NSCollectionLayoutSection {
+         let section = NSCollectionLayoutSection(group: group)
+         section.orthogonalScrollingBehavior = behavior
+         section.interGroupSpacing = interGroupSpasing
+         section.boundarySupplementaryItems = supplementaryItems
+         section.supplementariesFollowContentInsets = contentInsers
 
-     }
-     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-         return firebaseDrinks[section].menu.count
+         return section
      }
      
-     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-         if firebaseDrinks[indexPath.section].isStatus {
-             guard let cell = tableView.dequeueReusableCell(withIdentifier: AlcoViewCell.identifier) as? AlcoViewCell else {
-                 return UITableViewCell()
+     
+     private func createSaleSection() -> NSCollectionLayoutSection {
+         
+     let item = NSCollectionLayoutItem(layoutSize: .init(widthDimension: .fractionalWidth(1),
+                                                         heightDimension: .fractionalHeight(1)))
+         let group = NSCollectionLayoutGroup.horizontal(layoutSize: .init(widthDimension: .fractionalWidth(1.15),
+                                                                      heightDimension: .fractionalHeight(0.33)),
+                                                                      subitems: [item])
+         
+         let section = createLayoutSection(group: group,
+                                           behavior: .groupPaging,
+                                           interGroupSpasing: 5,
+                                           supplementaryItems: [],
+                                           contentInsers: false)
+             section.contentInsets = .init(top: -60, leading: 0, bottom: 0, trailing: 0)
+         return section
+     }
+     
+     private func createCategorySection() -> NSCollectionLayoutSection {
+         
+     let item = NSCollectionLayoutItem(layoutSize: .init(widthDimension: .fractionalWidth(0.25),
+                                                         heightDimension: .fractionalHeight(1)))
+     let group = NSCollectionLayoutGroup.horizontal(layoutSize: .init(widthDimension: .fractionalWidth(1),
+                                                                      heightDimension: .fractionalHeight(0.1)),
+                                                                      subitems: [item])
+         group.interItemSpacing = .flexible(10)
+         
+         let section = createLayoutSection(group: group,
+                                           behavior: .none,
+                                           interGroupSpasing: 10,
+                                           supplementaryItems: [suplementaryHeaderItem()],
+                                           contentInsers: false)
+             section.contentInsets = .init(top: 0, leading: 10, bottom: 0, trailing: 10)
+         
+         return section
+     }
+     
+     private func createFoodForCategorySection() -> NSCollectionLayoutSection {
+         
+         let item = NSCollectionLayoutItem(layoutSize: .init(widthDimension: .fractionalWidth(1),
+                                                             heightDimension: .fractionalHeight(1)))
+         let group = NSCollectionLayoutGroup.horizontal(layoutSize: .init(widthDimension: .fractionalWidth(0.75),
+                                                                      heightDimension: .fractionalHeight(0.35)),
+                                                                      subitems: [item])
+         
+         let section = createLayoutSection(group: group,
+                                           behavior: .continuous,
+                                           interGroupSpasing: 10,
+                                           supplementaryItems: [suplementaryHeaderItem()],
+                                           contentInsers: false)
+             section.contentInsets = .init(top: -85, leading: 10, bottom: 0, trailing: 0)
+         
+         return section
+     }
+     
+     
+     
+     private func suplementaryHeaderItem() -> NSCollectionLayoutBoundarySupplementaryItem {
+         .init(layoutSize: .init(widthDimension: .fractionalWidth(1),
+                                 heightDimension: .estimated(30)),
+               elementKind: UICollectionView.elementKindSectionHeader,
+               alignment: .top)
+     }
+ }
+
+
+ extension ViewController: UICollectionViewDataSource, UICollectionViewDelegate {
+
+     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+             print("Collection view tapped at section \(indexPath.section) and row \(indexPath.row)")
+
+             switch sections[indexPath.section] {
+             case .category(let categories):
+                 if indexPath.row < categories.count {
+                     selectedCategory = categories[indexPath.row].category
+                     print("Category selected: \(String(describing: selectedCategory))")
+                     collectionView.reloadSections(IndexSet(integer: sections.firstIndex { $0.title == Resources.Strings.foodForCategory } ?? 0))
+                 }
+             case .foodForCategory:
+                 let examples = MockData.shared.foodForCategory.filter { $0.category == selectedCategory }
+                 print("Total items in examples: \(examples.count), selectedCategory: \(String(describing: selectedCategory))")
+                 if indexPath.row < examples.count {
+                     let selectedProduct = examples[indexPath.row]
+                     print("Selected product: \(selectedProduct.title)")
+                     presentProductDetailViewController(selectedProduct, indexPath: indexPath)
+                 } else {
+                     print("Selected index \(indexPath.row) is out of range for examples count \(examples.count)")
+                 }
+             default:
+                 print("Unhandled section tapped.")
+                 break
+             }
+         }
+
+     private func presentProductDetailViewController(_ product: MenuItem, indexPath: IndexPath) {
+         guard let selectedCategory = selectedCategory else { return }
+         let productDetailVC = ProductDetailViewController(name: product.title, price: String(product.price), image: product.image, category: selectedCategory, indexPath: indexPath, descriptionForFood: product.description)
+         
+         if let sheet = productDetailVC.sheetPresentationController {
+             let customDetent = UISheetPresentationController.Detent.custom { context in
+                 let targetHeight: CGFloat = 600
+                 return targetHeight
              }
              
-             let nameAndPrice = firebaseDrinks[indexPath.section].menu[indexPath.row]
-                         cell.configure(nameAndPrice: nameAndPrice)
-             return cell
-         } else {
-             return UITableViewCell()
-     }
-   }
- }
-
-
- extension MenuDisplayViewController: ExpandableHeaderViewDelegate {
-
-     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-         var header = tableView.dequeueReusableHeaderFooterView(withIdentifier: cellIdentifier) as? ExpandableHeaderView
-         if header == nil {
-             header = ExpandableHeaderView(reuseIdentifier: cellIdentifier)
+             sheet.detents = [customDetent, .large()]
+             sheet.largestUndimmedDetentIdentifier = nil
+             sheet.prefersScrollingExpandsWhenScrolledToEdge = false
+             sheet.prefersEdgeAttachedInCompactHeight = true
+             sheet.widthFollowsPreferredContentSizeWhenEdgeAttached = true
+             sheet.prefersGrabberVisible = true
+             sheet.preferredCornerRadius = 30
          }
 
-         header?.customInit(title: firebaseDrinks[section].subMenu.subMenuName, section: section, delegate: self, image: firebaseDrinks[section].subMenu.subMenuImage)
-         return header
+         present(productDetailVC, animated: true, completion: nil)
      }
 
-     func toggleSection(header: ExpandableHeaderView, section: Int) {
-         firebaseDrinks[section].isStatus = !firebaseDrinks[section].isStatus
-         
-         myTableView.beginUpdates()
-         for i in 0..<firebaseDrinks[section].menu.count {
-             myTableView.reloadRows(at: [IndexPath(row: i, section: section)], with: .automatic)
+
+     func numberOfSections(in collectionView: UICollectionView) -> Int {
+         sections.count
+     }
+
+     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+             switch sections[section] {
+             case .sales(let items), .category(let items):
+                 return items.count
+             case .foodForCategory:
+                 if let selectedCategory = selectedCategory {
+                     return MockData.shared.foodForCategory.filter { $0.category == selectedCategory }.count
+                 } else {
+                     return MockData.shared.foodForCategory.count
+                 }
+             }
          }
-         myTableView.endUpdates()
+     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+            switch sections[indexPath.section] {
+            case .sales(let sale):
+                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: saleId, for: indexPath) as! SaleCollectionViewCell
+                cell.configureCell(imageNames: sale.map { $0.image })
+                return cell
+            case .foodForCategory:
+                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: exampleId, for: indexPath) as! ExampleCollectionViewCell
+                let filteredItems = MockData.shared.foodForCategory.filter { $0.category == selectedCategory }
+                let foodItem = filteredItems[indexPath.row]
+                cell.configureCell(imageURL: foodItem.image, nameL: foodItem.title, price: foodItem.price, isDataLoaded: true)
+                return cell
+            case .category(let category):
+                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: categoryId, for: indexPath) as! CategoryCollectionViewCell
+                cell.configureCell(categoryName: category[indexPath.row].title, imageName: category[indexPath.row].image)
+                return cell
+            }
+        }
+
+     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+         switch kind {
+         case UICollectionView.elementKindSectionHeader:
+             let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind,
+                                                                          withReuseIdentifier: headerId,
+                                                                          for: indexPath) as! HeaderSupplementaryView
+             switch sections[indexPath.section] {
+             case .category(_):
+                 header.configureHeader(categoryName: sections[indexPath.section].title)
+             default:
+                 header.configureHeader(categoryName: sections[indexPath.section].title)
+             }
+             return header
+         default:
+             return UICollectionReusableView()
+         }
      }
  }
-
 
 
 

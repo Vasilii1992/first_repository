@@ -43,170 +43,40 @@ final class MenuDisplayViewController: UIViewController {
         
         fetchDataFromFirebase(selectedIndex: 0)
     }
-    
-//     func fetchDataFromFirebase(selectedIndex: Int) {
-//
-//         if !hasLoadedOnce {
-//             loaderAnimationView.isHidden = false
-//             loaderAnimationView.play()
-//             hasLoadedOnce = true
-//         }
-//        let db = Firestore.firestore()
-//         let collectionName = selectedIndex == 0 ? alcoKey : nonAlcoKey
-//         
-//        db.collection(collectionName).getDocuments { [weak self] snapshot, error in
-//            guard let self = self else { return }
-//            
-//            DispatchQueue.main.async {
-//                 self.loaderAnimationView.stop()
-//                 self.loaderAnimationView.isHidden = true
-//             }
-//
-//            if let error = error {
-//                print("Error getting documents: \(error)")
-//                return
-//            }
-//
-//            guard let snapshot = snapshot else {
-//                print("No documents")
-//                return
-//            }
-//
-//            var drinks: [FirebaseDrink] = []
-//            for document in snapshot.documents {
-//                let data = document.data()
-//                guard let subMenuName = data["subMenuName"] as? String,
-//                      let subMenuImage = data["subMenuImage"] as? String,
-//                      let drinksData = data["menu"] as? [[String: Any]] else {
-//                    continue
-//                }
-//
-//                var menu: [NameAndPrice] = []
-//                for drinkData in drinksData {
-//                    guard let name = drinkData["name"] as? String,
-//                          let description = drinkData["description"] as? String,
-//                          let images = drinkData["images"] as? String,
-//                          let priceData = drinkData["price"] as? [[String: Any]] else {
-//                        continue
-//                    }
-//
-//                    var volumeAndPrices: [VolumeAndPrice] = []
-//                    for priceEntry in priceData {
-//                        guard let volume = priceEntry["volume"] as? String,
-//                              let price = priceEntry["price"] as? Int else {
-//                            continue
-//                        }
-//                        let volumeAndPrice = VolumeAndPrice(volume: volume, price: price)
-//                        volumeAndPrices.append(volumeAndPrice)
-//                    }
-//
-//                    let drink = NameAndPrice(name: name,
-//                                             price: volumeAndPrices,
-//                                             description: description,
-//                                             images: images)
-//                    menu.append(drink)
-//                }
-//
-//                let subMenu = SubMenu(subMenuName: subMenuName, subMenuImage: subMenuImage)
-//                let firebaseDrink = FirebaseDrink(subMenu: subMenu,
-//                                                  menu: menu,
-//                                                  isStatus: false,
-//                                                  name: subMenuName,
-//                                                  price: [],
-//                                                  description: "",
-//                                                  images: subMenuImage)
-//                drinks.append(firebaseDrink)
-//            }
-//
-//            self.firebaseDrinks = drinks
-//            self.myTableView.reloadData()
-//        }
-//    }
+
     func fetchDataFromFirebase(selectedIndex: Int) {
-        if !hasLoadedOnce {
-            DispatchQueue.main.async {
-                self.loaderAnimationView.isHidden = false
-                self.loaderAnimationView.play()
-            }
-            hasLoadedOnce = true
-        }
-        
-        let db = Firestore.firestore()
-        let collectionName = selectedIndex == 0 ? alcoKey : nonAlcoKey
+           if !hasLoadedOnce {
+               DispatchQueue.main.async {
+                   self.loaderAnimationView.isHidden = false
+                   self.loaderAnimationView.play()
+               }
+               hasLoadedOnce = true
+           }
+           
+           let collectionName = selectedIndex == 0 ? alcoKey : nonAlcoKey
 
-        // Perform the database fetch on a background thread
-        DispatchQueue.global(qos: .userInitiated).async { [weak self] in
-            db.collection(collectionName).getDocuments { snapshot, error in
-                guard let self = self else { return }
+           APIManager.shared.fetchDrinksData(collectionName: collectionName) { [weak self] drinks, error in
+               guard let self = self else { return }
 
-                // Switch back to the main thread to update the UI
-                DispatchQueue.main.async {
-                    self.loaderAnimationView.stop()
-                    self.loaderAnimationView.isHidden = true
-                    
-                    if let error = error {
-                        print("Error getting documents: \(error)")
-                        return
-                    }
+               DispatchQueue.main.async {
+                   self.loaderAnimationView.stop()
+                   self.loaderAnimationView.isHidden = true
+                   
+                   if let error = error {
+                       print("Error getting documents: \(error)")
+                       return
+                   }
 
-                    guard let snapshot = snapshot else {
-                        print("No documents")
-                        return
-                    }
+                   guard let drinks = drinks else {
+                       print("No documents")
+                       return
+                   }
 
-                    var drinks: [FirebaseDrink] = []
-                    for document in snapshot.documents {
-                        let data = document.data()
-                        guard let subMenuName = data["subMenuName"] as? String,
-                              let subMenuImage = data["subMenuImage"] as? String,
-                              let drinksData = data["menu"] as? [[String: Any]] else {
-                            continue
-                        }
-
-                        var menu: [NameAndPrice] = []
-                        for drinkData in drinksData {
-                            guard let name = drinkData["name"] as? String,
-                                  let description = drinkData["description"] as? String,
-                                  let images = drinkData["images"] as? String,
-                                  let priceData = drinkData["price"] as? [[String: Any]] else {
-                                continue
-                            }
-
-                            var volumeAndPrices: [VolumeAndPrice] = []
-                            for priceEntry in priceData {
-                                guard let volume = priceEntry["volume"] as? String,
-                                      let price = priceEntry["price"] as? Int else {
-                                    continue
-                                }
-                                let volumeAndPrice = VolumeAndPrice(volume: volume, price: price)
-                                volumeAndPrices.append(volumeAndPrice)
-                            }
-
-                            let drink = NameAndPrice(name: name,
-                                                     price: volumeAndPrices,
-                                                     description: description,
-                                                     images: images)
-                            menu.append(drink)
-                        }
-
-                        let subMenu = SubMenu(subMenuName: subMenuName, subMenuImage: subMenuImage)
-                        let firebaseDrink = FirebaseDrink(subMenu: subMenu,
-                                                          menu: menu,
-                                                          isStatus: false,
-                                                          name: subMenuName,
-                                                          price: [],
-                                                          description: "",
-                                                          images: subMenuImage)
-                        drinks.append(firebaseDrink)
-                    }
-
-                    self.firebaseDrinks = drinks
-                    self.myTableView.reloadData()
-                }
-            }
-        }
-    }
-
+                   self.firebaseDrinks = drinks
+                   self.myTableView.reloadData()
+               }
+           }
+       }
 
    private func setupViews() {
         self.view.addSubview(myTableView)
