@@ -171,7 +171,7 @@ final class ViewController: UIViewController,UICollectionViewDelegateFlowLayout 
                                           interGroupSpasing: 5,
                                           supplementaryItems: [],
                                           contentInsers: false)
-            section.contentInsets = .init(top: -60, leading: 0, bottom: 0, trailing: 0)
+            section.contentInsets = .init(top: -60, leading: 0, bottom: -10, trailing: 0)
         return section
     }
     
@@ -189,7 +189,7 @@ final class ViewController: UIViewController,UICollectionViewDelegateFlowLayout 
                                           interGroupSpasing: 10,
                                           supplementaryItems: [suplementaryHeaderItem()],
                                           contentInsers: false)
-            section.contentInsets = .init(top: 0, leading: 10, bottom: 0, trailing: 10)
+            section.contentInsets = .init(top: 3, leading: 10, bottom: 3, trailing: 10)
         
         return section
     }
@@ -216,7 +216,7 @@ final class ViewController: UIViewController,UICollectionViewDelegateFlowLayout 
     
     private func suplementaryHeaderItem() -> NSCollectionLayoutBoundarySupplementaryItem {
         .init(layoutSize: .init(widthDimension: .fractionalWidth(1),
-                                heightDimension: .estimated(30)),
+                                heightDimension: .estimated(28)),
               elementKind: UICollectionView.elementKindSectionHeader,
               alignment: .top)
     }

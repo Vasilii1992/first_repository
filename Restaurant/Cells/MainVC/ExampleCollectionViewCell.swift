@@ -103,17 +103,17 @@ final class ExampleCollectionViewCell: UICollectionViewCell {
             foodImageView.topAnchor.constraint(equalTo: topAnchor),
             foodImageView.leadingAnchor.constraint(equalTo: leadingAnchor),
             foodImageView.trailingAnchor.constraint(equalTo: trailingAnchor),
-            foodImageView.bottomAnchor.constraint(equalTo: bottomAnchor),
+            foodImageView.bottomAnchor.constraint(equalTo: backgroundTitleView.bottomAnchor,constant: 40),
             
-                loaderAnimationView.centerXAnchor.constraint(equalTo: centerXAnchor),
-                loaderAnimationView.centerYAnchor.constraint(equalTo: centerYAnchor),
-                loaderAnimationView.widthAnchor.constraint(equalToConstant: 100),
-                loaderAnimationView.heightAnchor.constraint(equalToConstant: 100),
+            loaderAnimationView.centerXAnchor.constraint(equalTo: centerXAnchor),
+            loaderAnimationView.centerYAnchor.constraint(equalTo: centerYAnchor),
+            loaderAnimationView.widthAnchor.constraint(equalToConstant: 100),
+            loaderAnimationView.heightAnchor.constraint(equalToConstant: 100),
 
             backgroundTitleView.bottomAnchor.constraint(equalTo: bottomAnchor),
             backgroundTitleView.leadingAnchor.constraint(equalTo: leadingAnchor),
             backgroundTitleView.trailingAnchor.constraint(equalTo: trailingAnchor),
-            backgroundTitleView.heightAnchor.constraint(equalTo: heightAnchor, multiplier: 0.2),
+            backgroundTitleView.heightAnchor.constraint(equalTo: heightAnchor, multiplier: 0.15),
 
             nameLabel.centerYAnchor.constraint(equalTo: backgroundTitleView.centerYAnchor),
             nameLabel.leadingAnchor.constraint(equalTo: backgroundTitleView.leadingAnchor, constant: 16),

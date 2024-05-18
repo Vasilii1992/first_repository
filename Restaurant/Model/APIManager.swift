@@ -5,7 +5,7 @@ import FirebaseDatabase
 import FirebaseFirestoreInternal
 import FirebaseFirestore
 
-class APIManager {
+final class APIManager {
         
     static let shared = APIManager()
     

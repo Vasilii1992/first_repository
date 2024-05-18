@@ -3,6 +3,18 @@ import UIKit
 
 final class HeaderSupplementaryView: UICollectionReusableView {
     
+    private lazy var headerBackgroundView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .white
+        view.layer.cornerRadius = 10
+        view.layer.shadowColor = UIColor.black.cgColor
+        view.layer.shadowOpacity = 0.1
+        view.layer.shadowOffset = CGSize(width: 0, height: 2)
+        view.layer.shadowRadius = 4
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+    
     private lazy var headerLabel: UILabel = {
        let label = UILabel()
         label.textAlignment = .left
@@ -12,10 +24,13 @@ final class HeaderSupplementaryView: UICollectionReusableView {
         return label
     }()
     
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
-        backgroundColor = #colorLiteral(red: 0.8907808065, green: 0.9306998849, blue: 0.82597965, alpha: 0.3488979719)
-        addSubview(headerLabel)
+        backgroundColor = .clear
+        addSubview(headerBackgroundView)
+        headerBackgroundView.addSubview(headerLabel)
+      
         setConstraints()
     }
     
@@ -29,12 +44,15 @@ final class HeaderSupplementaryView: UICollectionReusableView {
     
     private func setConstraints() {
         NSLayoutConstraint.activate([
-            headerLabel.centerYAnchor.constraint(equalTo: centerYAnchor),
-            headerLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 10),
-            headerLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: 0),
-            headerLabel.topAnchor.constraint(equalTo: topAnchor, constant: 0),
-            headerLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -1)
-        
+
+                      headerBackgroundView.centerYAnchor.constraint(equalTo: centerYAnchor),
+                      headerBackgroundView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 12),
+                      headerBackgroundView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -12),
+                      headerBackgroundView.heightAnchor.constraint(equalToConstant: 30),
+
+                      headerLabel.centerYAnchor.constraint(equalTo: headerBackgroundView.centerYAnchor),
+                      headerLabel.leadingAnchor.constraint(equalTo: headerBackgroundView.leadingAnchor, constant: 10),
+                      headerLabel.trailingAnchor.constraint(equalTo: headerBackgroundView.trailingAnchor, constant: -10)
         ])
     }
 }
