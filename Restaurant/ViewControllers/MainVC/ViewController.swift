@@ -43,7 +43,7 @@ final class ViewController: UIViewController,UICollectionViewDelegateFlowLayout 
         super.viewDidLoad()
 
         setupViews()
-        setupConstrains()
+        setupConstraints()
         setDelegate()
         fetchFoodDataFromFirebase()
 
@@ -127,7 +127,7 @@ final class ViewController: UIViewController,UICollectionViewDelegateFlowLayout 
         collectionView.collectionViewLayout = createLayout()
     }
     
-    private func setupConstrains() {
+    private func setupConstraints() {
         NSLayoutConstraint.activate([
             
             collectionView.topAnchor.constraint(equalTo: view.topAnchor, constant: 0),

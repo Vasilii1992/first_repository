@@ -87,7 +87,8 @@ final class ExampleCollectionViewCell: UICollectionViewCell {
             foodImageView.image = UIImage(named: "placeholder_image")
 
             if let url = URL(string: imageURL) {
-                foodImageView.sd_setImage(with: url) { _, _, _, _ in
+                foodImageView.sd_setImage(with: url) { [weak self] _, _, _, _ in
+                    guard let self = self else { return }
                     self.loaderAnimationView.stop()
                     self.loaderAnimationView.isHidden = true
                 }

@@ -110,7 +110,8 @@ final class ProductDetailViewController: UIViewController {
             let selectedItem = filteredItems[indexPath.row]
             loaderAnimationView.play()
             if let url = URL(string: selectedItem.image) {
-                productImageView.sd_setImage(with: url) { _, _, _, _ in
+                productImageView.sd_setImage(with: url) { [weak self] _, _, _, _ in
+                    guard let self = self else { return }
                     self.loaderAnimationView.stop()
                     self.loaderAnimationView.isHidden = true
                 }
@@ -153,5 +154,10 @@ final class ProductDetailViewController: UIViewController {
             descriptionLabel.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor, constant: 10),
             descriptionLabel.widthAnchor.constraint(equalTo: scrollView.widthAnchor, multiplier: 0.9)
         ])
+    }
+    
+    deinit {
+        loaderAnimationView.stop()
+        print("ProductDetailViewController deinitialized")
     }
 }
