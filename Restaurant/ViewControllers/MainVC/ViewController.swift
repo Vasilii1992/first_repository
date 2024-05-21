@@ -49,6 +49,28 @@ final class ViewController: UIViewController,UICollectionViewDelegateFlowLayout 
 
     }
     
+    private func presentProductDetailViewController(_ product: MenuItem, indexPath: IndexPath) {
+        guard let selectedCategory = selectedCategory else { return }
+        let productDetailVC = ProductDetailViewController(name: product.title, price: String(product.price), image: product.image, category: selectedCategory, indexPath: indexPath, descriptionForFood: product.description)
+        
+        if let sheet = productDetailVC.sheetPresentationController {
+            let customDetent = UISheetPresentationController.Detent.custom { context in
+                let targetHeight: CGFloat = 600
+                return targetHeight
+            }
+            
+            sheet.detents = [customDetent, .large()]
+            sheet.largestUndimmedDetentIdentifier = nil
+            sheet.prefersScrollingExpandsWhenScrolledToEdge = false
+            sheet.prefersEdgeAttachedInCompactHeight = true
+            sheet.widthFollowsPreferredContentSizeWhenEdgeAttached = true
+            sheet.prefersGrabberVisible = true
+            sheet.preferredCornerRadius = 30
+        }
+
+        present(productDetailVC, animated: true, completion: nil)
+    }
+    
     func fetchFoodDataFromFirebase() {
             DispatchQueue.main.async {
                 self.loaderAnimationView.isHidden = false
@@ -92,7 +114,6 @@ final class ViewController: UIViewController,UICollectionViewDelegateFlowLayout 
         view.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
         view.addSubview(collectionView)
         collectionView.addSubview(loaderAnimationView)
-
 
         collectionView.register(SaleCollectionViewCell.self,
                                 forCellWithReuseIdentifier: saleId)
@@ -161,7 +182,7 @@ final class ViewController: UIViewController,UICollectionViewDelegateFlowLayout 
       
       private func createSaleSection() -> NSCollectionLayoutSection {
           
-      let item = NSCollectionLayoutItem(layoutSize: .init(widthDimension: .fractionalWidth(1),
+          let item = NSCollectionLayoutItem(layoutSize: .init(widthDimension: .fractionalWidth(1),
                                                           heightDimension: .fractionalHeight(1)))
           let group = NSCollectionLayoutGroup.horizontal(layoutSize: .init(widthDimension: .fractionalWidth(1.15),
                                                                        heightDimension: .fractionalHeight(0.33)),
@@ -211,9 +232,7 @@ final class ViewController: UIViewController,UICollectionViewDelegateFlowLayout 
               section.contentInsets = .init(top: -100, leading: 10, bottom: 0, trailing: 0)
           
           return section
-      }
-      
-      
+  }
       
       private func suplementaryHeaderItem() -> NSCollectionLayoutBoundarySupplementaryItem {
           .init(layoutSize: .init(widthDimension: .fractionalWidth(1),
@@ -251,29 +270,6 @@ extension ViewController: UICollectionViewDataSource, UICollectionViewDelegate {
                 break
             }
         }
-
-    private func presentProductDetailViewController(_ product: MenuItem, indexPath: IndexPath) {
-        guard let selectedCategory = selectedCategory else { return }
-        let productDetailVC = ProductDetailViewController(name: product.title, price: String(product.price), image: product.image, category: selectedCategory, indexPath: indexPath, descriptionForFood: product.description)
-        
-        if let sheet = productDetailVC.sheetPresentationController {
-            let customDetent = UISheetPresentationController.Detent.custom { context in
-                let targetHeight: CGFloat = 600
-                return targetHeight
-            }
-            
-            sheet.detents = [customDetent, .large()]
-            sheet.largestUndimmedDetentIdentifier = nil
-            sheet.prefersScrollingExpandsWhenScrolledToEdge = false
-            sheet.prefersEdgeAttachedInCompactHeight = true
-            sheet.widthFollowsPreferredContentSizeWhenEdgeAttached = true
-            sheet.prefersGrabberVisible = true
-            sheet.preferredCornerRadius = 30
-        }
-
-        present(productDetailVC, animated: true, completion: nil)
-    }
-
 
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         sections.count
