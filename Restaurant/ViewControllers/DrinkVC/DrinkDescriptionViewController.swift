@@ -8,7 +8,7 @@ final class DrinkDescriptionViewController: UIViewController {
     private var drinkDescription: String?
     private var name: String?
 
-    var scrollView : UIScrollView = {
+   private var scrollView : UIScrollView = {
         let scrollView = UIScrollView()
         scrollView.translatesAutoresizingMaskIntoConstraints = false
         scrollView.alwaysBounceVertical = true
@@ -113,7 +113,7 @@ final class DrinkDescriptionViewController: UIViewController {
             nameLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             nameLabel.widthAnchor.constraint(lessThanOrEqualTo: view.widthAnchor, multiplier: 0.6),
             
-            scrollView.topAnchor.constraint(equalTo: nameLabel.bottomAnchor, constant: 40),
+            scrollView.topAnchor.constraint(equalTo: nameLabel.bottomAnchor, constant: 20),
             scrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
             scrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
             scrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
