@@ -19,7 +19,7 @@ final class HeaderSupplementaryView: UICollectionReusableView {
        let label = UILabel()
         label.textAlignment = .left
         label.font = UIFont(name: Resources.Fonts.timesNewRoman, size: 20)
-        label.textColor = #colorLiteral(red: 0.4919037223, green: 0.4086572528, blue: 0.3491387367, alpha: 1)
+        label.textColor = .headerView
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()

@@ -41,7 +41,7 @@ final class ExampleCollectionViewCell: UICollectionViewCell {
         label.text = "$0.00"
         label.textAlignment = .right
         label.font = UIFont.systemFont(ofSize: 16, weight: .bold)
-        label.textColor = #colorLiteral(red: 0.8078431487, green: 0.02745098062, blue: 0.3333333433, alpha: 1)
+        label.textColor = .exampleViewCellPrice
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -103,7 +103,7 @@ final class ExampleCollectionViewCell: UICollectionViewCell {
             foodImageView.topAnchor.constraint(equalTo: topAnchor),
             foodImageView.leadingAnchor.constraint(equalTo: leadingAnchor),
             foodImageView.trailingAnchor.constraint(equalTo: trailingAnchor),
-            foodImageView.bottomAnchor.constraint(equalTo: backgroundTitleView.bottomAnchor,constant: 40),
+            foodImageView.bottomAnchor.constraint(equalTo: backgroundTitleView.bottomAnchor,constant: 50),
             
             loaderAnimationView.centerXAnchor.constraint(equalTo: centerXAnchor),
             loaderAnimationView.centerYAnchor.constraint(equalTo: centerYAnchor),

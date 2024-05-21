@@ -12,7 +12,6 @@ final class ProductDetailViewController: UIViewController {
     private var category: FoodCategory?
     private var indexPath: IndexPath?
     private var descriptionForFood: String
-    let colorForPrice = #colorLiteral(red: 0.2793985307, green: 0.5675081015, blue: 0.1696840525, alpha: 1)
 
     init() {
         self.name = ""
@@ -55,7 +54,7 @@ final class ProductDetailViewController: UIViewController {
     private lazy var priceLabel: UILabel = {
         let label = UILabel()
        label.createNewLabel(text: "",
-                            color: colorForPrice ,
+                            color: .colorForPrice,
                             size: 30,
                             font: Resources.Fonts.timesNewRoman)
                             return label

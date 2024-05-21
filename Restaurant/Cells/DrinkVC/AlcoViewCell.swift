@@ -144,7 +144,6 @@ import UIKit
             mlLabel3.leadingAnchor.constraint(equalTo: mlLabel2.trailingAnchor,constant: 80),
             mlLabel3.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
 
-        
         ])
     }    
 }

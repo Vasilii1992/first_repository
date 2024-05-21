@@ -31,7 +31,7 @@ enum Resources {
         }
         static let foodForCategory = "Dishes of the Category".localized()
         static var informationLabel = "Our Restaurant \nis located in the \nMoskovskie Vorota Hotel \nat the address: \nMoskovsky prospekt 97A.\nWe will be glad \nto see you.".localized()
-        static var phoneLabel = "Phone: 8(812)448-20-55"
+        static var phoneLabel = "Phone: 8(812)448-71-21"
         static var privacyPolicy = "Privacy Policy"
     }
 }

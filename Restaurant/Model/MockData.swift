@@ -7,9 +7,9 @@ final class MockData {
     static let shared = MockData()
     
     private let sales: [MenuItem] = [
-        .init(image: "IMG_7427"),
-        .init(image: "IMG_7429"),
         .init(image: "IMG_7428"),
+        .init(image: "IMG_7429"),
+        .init(image: "IMG_7427"),
         .init(image: "IMG_7420"),
         .init(image: "IMG_7413"),
         .init(image: "IMG_7415"),
@@ -36,6 +36,7 @@ final class MockData {
 }
 
 /*
+
 
  */
 

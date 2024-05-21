@@ -6,9 +6,16 @@
 //
 
 import UIKit
-
+import Lottie
 
 final class AboutUsViewController: UIViewController {
+    
+    private let animationView: LottieAnimationView = {
+        let animationView = LottieAnimationView(name: "thirdScreen")
+        animationView.loopMode = .loop
+        animationView.translatesAutoresizingMaskIntoConstraints = false
+        return animationView
+    }()
     
 
     
@@ -18,6 +25,7 @@ final class AboutUsViewController: UIViewController {
 
         setupViews()
         setupConstraints()
+        animationView.play()
         privacyPolicyButton.addTarget(self, action: #selector(privacyPolicyAction), for: .touchUpInside)
     }
     
@@ -79,6 +87,8 @@ final class AboutUsViewController: UIViewController {
         view.addSubview(imageView)
         view.addSubview(phoneLabel)
         view.addSubview(privacyPolicyButton)
+        view.addSubview(animationView)
+        
     }
     
     private func setupConstraints() {
@@ -100,7 +110,12 @@ final class AboutUsViewController: UIViewController {
             imageView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: -view.bounds.width - 45),
             imageView.bottomAnchor.constraint(equalTo: view.bottomAnchor), 
             imageView.widthAnchor.constraint(equalToConstant: view.bounds.width),
-            imageView.heightAnchor.constraint(equalToConstant: view.bounds.height)
+            imageView.heightAnchor.constraint(equalToConstant: view.bounds.height),
+            
+            animationView.bottomAnchor.constraint(equalTo: phoneLabel.topAnchor,constant: 10),
+            animationView.centerXAnchor.constraint(equalTo: phoneLabel.centerXAnchor),
+            animationView.widthAnchor.constraint(equalToConstant: 250),
+            animationView.heightAnchor.constraint(equalToConstant: 250),
                 
         ])
     }

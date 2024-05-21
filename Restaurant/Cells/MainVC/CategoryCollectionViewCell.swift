@@ -24,8 +24,8 @@ final class CategoryCollectionViewCell: UICollectionViewCell {
         didSet {
             if isSelected {
                 layer.borderWidth = 2
-                layer.borderColor = #colorLiteral(red: 0.8282058835, green: 0.647847712, blue: 0.6080785394, alpha: 1)
-                backgroundColor = #colorLiteral(red: 0.954551518, green: 0.8756589293, blue: 0.8641830087, alpha: 1)
+                layer.borderColor = #colorLiteral(red: 0.4666666687, green: 0.7647058964, blue: 0.2666666806, alpha: 1)
+                backgroundColor = #colorLiteral(red: 0.8907808065, green: 0.9306998849, blue: 0.82597965, alpha: 0.3488979719)
 
             } else {
                 layer.borderWidth = 0
