@@ -2,14 +2,14 @@
 
 import UIKit
 
-protocol ExpandableHeaderViewDelegate {
+protocol ExpandableHeaderViewDelegate: AnyObject {
     
     func toggleSection(header: ExpandableHeaderView, section: Int)
 }
 final class ExpandableHeaderView: UITableViewHeaderFooterView {
     
     var section: Int!
-    var delegate: ExpandableHeaderViewDelegate?
+   weak var delegate: ExpandableHeaderViewDelegate?
     
     private let myImageView: UIImageView = {
         let imageView = UIImageView()
