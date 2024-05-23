@@ -4,7 +4,7 @@ import UIKit
 
 final class CategoryCollectionViewCell: UICollectionViewCell {
     
-    private let categoryImageView: UIImageView = {
+    private lazy var categoryImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFit
         imageView.translatesAutoresizingMaskIntoConstraints = false

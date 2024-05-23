@@ -24,8 +24,6 @@ final class FirebaseDrink {
     }
 }
 
-
-
 final class NameAndPrice {
     var name: String
     var price: [VolumeAndPrice]

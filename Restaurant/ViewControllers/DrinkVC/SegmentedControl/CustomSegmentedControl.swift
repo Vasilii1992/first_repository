@@ -1,9 +1,3 @@
-//
-//  CustomSegmentedControl.swift
-//  Restaurant
-//
-//  Created by Василий Тихонов on 05.03.2024.
-//
 
 import UIKit
 

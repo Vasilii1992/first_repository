@@ -14,8 +14,6 @@ final class MenuDisplayViewController: UIViewController {
     private var nonAlcoKey = "notAlcoEng".localized()
     
     
-
-    
     private let loaderAnimationView: LottieAnimationView = {
         let animationView = LottieAnimationView(name: "LoaderForBar")
         animationView.loopMode = .loop
@@ -23,11 +21,10 @@ final class MenuDisplayViewController: UIViewController {
         return animationView
     }()
 
-    private let  myTableView: UITableView = {
+    private let myTableView: UITableView = {
         let tableView = UITableView(frame: .zero, style: .grouped)
         tableView.tableFooterView = UIView()
         tableView.backgroundColor = .white
-
         
         return tableView
     }()    
@@ -129,8 +126,6 @@ extension MenuDisplayViewController: UITableViewDelegate {
         
                 present(drinkDescriptionVC, animated: true)
         }
-    
-    
 }
 extension MenuDisplayViewController: UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {

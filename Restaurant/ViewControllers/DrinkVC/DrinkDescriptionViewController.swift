@@ -8,7 +8,7 @@ final class DrinkDescriptionViewController: UIViewController {
     private var drinkDescription: String?
     private var name: String?
 
-   private var scrollView : UIScrollView = {
+   private lazy var scrollView : UIScrollView = {
         let scrollView = UIScrollView()
         scrollView.translatesAutoresizingMaskIntoConstraints = false
         scrollView.alwaysBounceVertical = true

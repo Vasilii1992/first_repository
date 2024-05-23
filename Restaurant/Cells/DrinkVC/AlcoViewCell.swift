@@ -30,7 +30,7 @@ import UIKit
                             return label
     }()
     
-    private let mlLabel2: UILabel = {
+     private lazy var mlLabel2: UILabel = {
         let label = UILabel()
         label.createNewLabel(text: "450ml",
                             color: .black,
@@ -39,7 +39,7 @@ import UIKit
                             return label
     }()
     
-    private let mlLabel3: UILabel = {
+     private lazy var mlLabel3: UILabel = {
         let label = UILabel()
         label.createNewLabel(text: "500ml",
                             color: .black,
@@ -49,7 +49,7 @@ import UIKit
     }()
     
     
-    private let priceLabel: UILabel = {
+     private lazy var priceLabel: UILabel = {
         let label = UILabel()
         label.createNewLabel(text: "",
                             color: .black,
@@ -57,7 +57,7 @@ import UIKit
                             font: Resources.Fonts.palatinoItalic)
                             return label
     }()
-    private let priceLabel2: UILabel = {
+     private lazy var priceLabel2: UILabel = {
         let label = UILabel()
         label.createNewLabel(text: "",
                             color: .black,
@@ -65,7 +65,7 @@ import UIKit
                             font: Resources.Fonts.palatinoItalic)
                             return label
     }()
-    private let priceLabel3: UILabel = {
+     private lazy var priceLabel3: UILabel = {
         let label = UILabel()
         label.createNewLabel(text: "",
                             color: .black,

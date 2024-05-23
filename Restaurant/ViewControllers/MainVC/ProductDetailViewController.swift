@@ -35,7 +35,7 @@ final class ProductDetailViewController: UIViewController {
          fatalError("init(coder:) has not been implemented")
     }
     
-    private var scrollView : UIScrollView = {
+    private lazy var scrollView : UIScrollView = {
          let scrollView = UIScrollView()
          scrollView.translatesAutoresizingMaskIntoConstraints = false
          scrollView.alwaysBounceVertical = true
@@ -148,7 +148,7 @@ final class ProductDetailViewController: UIViewController {
             scrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
 
 
-            descriptionLabel.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: 40),
+            descriptionLabel.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: 10),
             descriptionLabel.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: 20),
             descriptionLabel.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor, constant: -20),
             descriptionLabel.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor, constant: 10),

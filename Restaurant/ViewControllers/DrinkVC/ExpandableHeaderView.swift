@@ -9,9 +9,9 @@ protocol ExpandableHeaderViewDelegate: AnyObject {
 final class ExpandableHeaderView: UITableViewHeaderFooterView {
     
     var section: Int!
-   weak var delegate: ExpandableHeaderViewDelegate?
+    weak var delegate: ExpandableHeaderViewDelegate?
     
-    private let myImageView: UIImageView = {
+    private lazy var myImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFit
         imageView.image = UIImage(systemName: "questionmark")
@@ -60,7 +60,6 @@ final class ExpandableHeaderView: UITableViewHeaderFooterView {
             alcoLabel.centerYAnchor.constraint(equalTo: self.contentView.centerYAnchor),
             alcoLabel.leadingAnchor.constraint(equalTo: myImageView.trailingAnchor, constant: 16)
                 ])
-        
     }
     
     @objc func clickingOnSubMenu(gestureRecognizer: UITapGestureRecognizer) {
