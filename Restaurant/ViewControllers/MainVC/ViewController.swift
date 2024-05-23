@@ -23,7 +23,7 @@ final class ViewController: UIViewController,UICollectionViewDelegateFlowLayout 
     }()
     
     private let loaderAnimationView: LottieAnimationView = {
-        let animationView = LottieAnimationView(name: "Animation")
+        let animationView = LottieAnimationView(name: "Loader")
         animationView.loopMode = .loop
         animationView.translatesAutoresizingMaskIntoConstraints = false
         return animationView
