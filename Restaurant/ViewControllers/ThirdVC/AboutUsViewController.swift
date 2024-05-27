@@ -1,9 +1,3 @@
-//
-//  AboutUsViewController.swift
-//  Restaurant
-//
-//  Created by Василий Тихонов on 19.02.2024.
-//
 
 import UIKit
 import Lottie
@@ -113,8 +107,7 @@ final class AboutUsViewController: UIViewController {
             animationView.bottomAnchor.constraint(equalTo: phoneLabel.topAnchor,constant: 10),
             animationView.centerXAnchor.constraint(equalTo: phoneLabel.centerXAnchor),
             animationView.widthAnchor.constraint(equalToConstant: 250),
-            animationView.heightAnchor.constraint(equalToConstant: 250),
-                
+            animationView.heightAnchor.constraint(equalToConstant: 250)
         ])
     }
 
@@ -124,5 +117,4 @@ final class AboutUsViewController: UIViewController {
             self.imageView.transform = CGAffineTransform(translationX: self.view.bounds.width / 2, y: 0)
         }, completion: nil)
     }
-
 }

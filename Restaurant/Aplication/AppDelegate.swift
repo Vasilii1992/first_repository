@@ -1,23 +1,21 @@
 
 import UIKit
-import FirebaseCore
+import Firebase
+import SDWebImage
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         FirebaseApp.configure()
+        
+        let imageCache = SDImageCache.shared
+                imageCache.config.maxMemoryCost = 30 * 1024 * 1024 // 30 MB
+                imageCache.config.maxDiskSize = 100 * 1024 * 1024 // 200 MB
+                imageCache.config.shouldCacheImagesInMemory = true
+                imageCache.config.shouldUseWeakMemoryCache = true
         return true
     }
 
-    // MARK: UISceneSession Lifecycle
-
-    func application(_ application: UIApplication, configurationForConnecting connectingSceneSession: UISceneSession, options: UIScene.ConnectionOptions) -> UISceneConfiguration {
-
-        return UISceneConfiguration(name: "Default Configuration", sessionRole: connectingSceneSession.role)
-    }
-    func application(_ application: UIApplication, didDiscardSceneSessions sceneSessions: Set<UISceneSession>) {
-
-    }
 }
 

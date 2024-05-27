@@ -1,8 +1,7 @@
 
 
 import UIKit
-import FirebaseDatabase
-
+import Firebase
 
 final class MenuViewController: UIViewController {
     

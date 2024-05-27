@@ -1,16 +1,15 @@
 
 import UIKit
 import Firebase
-import FirebaseDatabase
-import FirebaseFirestoreInternal
-import FirebaseFirestore
+
 
 final class APIManager {
         
     static let shared = APIManager()
+    private init() {}
     
     private func configureFB() -> Firestore {
-        var db: Firestore!
+      var db: Firestore!
         let settings = FirestoreSettings()
         Firestore.firestore().settings = settings
         db = Firestore.firestore()
@@ -19,7 +18,7 @@ final class APIManager {
 
     func fetchFoodDataFromFirebase(foodItemKey: String, completion: @escaping ([MenuItem]?, Error?) -> Void) {
         let db = Firestore.firestore()
-        db.collection(foodItemKey).getDocuments { snapshot, error in
+        db.collection(foodItemKey).getDocuments {snapshot, error in
             if let error = error {
                 completion(nil, error)
                 return
@@ -53,9 +52,6 @@ final class APIManager {
             completion(foodItems, nil)
         }
     }
-    
-    
-    
     
     func fetchDrinksData(collectionName: String, completion: @escaping ([FirebaseDrink]?, Error?) -> Void) {
             let db = Firestore.firestore()

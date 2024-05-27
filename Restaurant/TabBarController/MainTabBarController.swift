@@ -30,8 +30,6 @@ final class MainTabBarController: UITabBarController {
         return viewController
     }
 
-
-    
     private func setTabBarAppearance() {
         tabBar.tintColor = .tabBarItemAccent
         tabBar.unselectedItemTintColor = .tabBarItemLight

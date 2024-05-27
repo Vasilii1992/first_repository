@@ -1,7 +1,6 @@
 
 import UIKit
-import FirebaseDatabase
-import FirebaseFirestoreInternal
+import Firebase
 import Lottie
 
 

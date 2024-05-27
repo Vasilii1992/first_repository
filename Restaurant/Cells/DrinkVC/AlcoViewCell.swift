@@ -1,9 +1,3 @@
-//
-//  AlcoViewCell.swift
-//  Restaurant
-//
-//  Created by Василий Тихонов on 27.02.2024.
-//
 
 import UIKit
 

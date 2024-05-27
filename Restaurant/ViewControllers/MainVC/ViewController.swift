@@ -2,14 +2,9 @@
 import UIKit
 import Lottie
 import Firebase
-import FirebaseDatabase
-import FirebaseFirestore
-
 
 final class ViewController: UIViewController,UICollectionViewDelegateFlowLayout {
 
-    private var isDataLoadedForCurrentGroup: Bool = false
-    
     private var foodItemKey = "foodItemsEng".localized()
 
     private let collectionView: UICollectionView = {
@@ -45,10 +40,10 @@ final class ViewController: UIViewController,UICollectionViewDelegateFlowLayout 
         setupViews()
         setupConstraints()
         setDelegate()
-        fetchFoodDataFromFirebase()
 
+        fetchFoodDataFromFirebase()
     }
-    
+
     private func presentProductDetailViewController(_ product: MenuItem, indexPath: IndexPath) {
         guard let selectedCategory = selectedCategory else { return }
         let productDetailVC = ProductDetailViewController(name: product.title, price: String(product.price), image: product.image, category: selectedCategory, indexPath: indexPath, descriptionForFood: product.description)
@@ -72,43 +67,42 @@ final class ViewController: UIViewController,UICollectionViewDelegateFlowLayout 
     }
     
     func fetchFoodDataFromFirebase() {
-            DispatchQueue.main.async {
-                self.loaderAnimationView.isHidden = false
-                self.loaderAnimationView.play()
-            }
+        DispatchQueue.main.async { [weak self] in
+            self?.loaderAnimationView.isHidden = false
+            self?.loaderAnimationView.play()
+        }
 
-            APIManager.shared.fetchFoodDataFromFirebase(foodItemKey: foodItemKey) { [weak self] foodItems, error in
-                guard let self = self else { return }
+        APIManager.shared.fetchFoodDataFromFirebase(foodItemKey: foodItemKey) { [weak self] foodItems, error in
+            guard let self = self else { return }
 
-                DispatchQueue.global(qos: .userInitiated).async {
-                    if let error = error {
-                        DispatchQueue.main.async {
-                            print("Error getting documents: \(error)")
-                            self.loaderAnimationView.stop()
-                            self.loaderAnimationView.isHidden = true
-                        }
-                        return
+            DispatchQueue.global(qos: .userInitiated).async {
+                if let error = error {
+                    DispatchQueue.main.async { [weak self] in
+                        print("Error getting documents: \(error)")
+                        self?.loaderAnimationView.stop()
+                        self?.loaderAnimationView.isHidden = true
                     }
+                    return
+                }
 
-                    guard let foodItems = foodItems else {
-                        DispatchQueue.main.async {
-                            print("No documents found")
-                            self.loaderAnimationView.stop()
-                            self.loaderAnimationView.isHidden = true
-                        }
-                        return
+                guard let foodItems = foodItems else {
+                    DispatchQueue.main.async { [weak self] in
+                        print("No documents found")
+                        self?.loaderAnimationView.stop()
+                        self?.loaderAnimationView.isHidden = true
                     }
+                    return
+                }
 
+                DispatchQueue.main.async { [weak self] in
                     MockData.shared.foodForCategory = foodItems
-
-                    DispatchQueue.main.async {
-                        self.collectionView.reloadData()
-                        self.loaderAnimationView.stop()
-                        self.loaderAnimationView.isHidden = true
-                    }
+                    self?.collectionView.reloadData()
+                    self?.loaderAnimationView.stop()
+                    self?.loaderAnimationView.isHidden = true
                 }
             }
         }
+    }
 
     private func setupViews() {
         view.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
@@ -141,7 +135,6 @@ final class ViewController: UIViewController,UICollectionViewDelegateFlowLayout 
             loaderAnimationView.heightAnchor.constraint(equalToConstant: 300)
                    
         ])
-        
     }
     
     private func setDelegate() {
@@ -246,13 +239,13 @@ final class ViewController: UIViewController,UICollectionViewDelegateFlowLayout 
 extension ViewController: UICollectionViewDataSource, UICollectionViewDelegate {
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-            print("Collection view tapped at section \(indexPath.section) and row \(indexPath.row)")
-
             switch sections[indexPath.section] {
+ 
             case .category(let categories):
                 if indexPath.row < categories.count {
                     selectedCategory = categories[indexPath.row].category
                     print("Category selected: \(String(describing: selectedCategory))")
+                    
                     collectionView.reloadSections(IndexSet(integer: sections.firstIndex { $0.title == Resources.Strings.foodForCategory } ?? 0))
                 }
             case .foodForCategory:

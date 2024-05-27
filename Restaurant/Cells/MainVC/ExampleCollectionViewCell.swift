@@ -76,26 +76,24 @@ final class ExampleCollectionViewCell: UICollectionViewCell {
     }
 
     func configureCell(imageURL: String, nameL: String, price: Int, isDataLoaded: Bool) {
-          foodImageView.image = UIImage(named: "placeholder_image")
-          
-          loaderAnimationView.isHidden = false
-          loaderAnimationView.play()
-          foodImageView.isHidden = true
-          
-          if let url = URL(string: imageURL) {
-              foodImageView.sd_setImage(with: url) { [weak self] _, _, _, _ in
-                  guard let self = self else { return }
-                  
-                  self.loaderAnimationView.stop()
-                  self.loaderAnimationView.isHidden = true
-                  self.foodImageView.isHidden = false
-              }
-          }
-          nameLabel.text = nameL
-          priceLabel.text = "\(price) ₽"
-      }
-      
-    
+            foodImageView.image = UIImage(named: "placeholder_image")
+            loaderAnimationView.isHidden = false
+            loaderAnimationView.play()
+            foodImageView.isHidden = true
+
+            if let url = URL(string: imageURL) {
+                let options: SDWebImageOptions = [.scaleDownLargeImages, .retryFailed]
+                foodImageView.sd_setImage(with: url, placeholderImage: nil, options: options) { [weak self] _, _, _, _ in
+                    guard let self = self else { return }
+                    self.loaderAnimationView.stop()
+                    self.loaderAnimationView.isHidden = true
+                    self.foodImageView.isHidden = false
+                }
+            }
+            nameLabel.text = nameL
+            priceLabel.text = "\(price) ₽"
+        }
+
     func setConstraints() {
         NSLayoutConstraint.activate([
 

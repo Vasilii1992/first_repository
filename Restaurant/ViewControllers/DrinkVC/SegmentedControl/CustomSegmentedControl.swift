@@ -91,7 +91,6 @@ private extension CustomSegmentedControl {
             
             selectedView.topAnchor.constraint(equalTo: stackView.topAnchor),
             selectedView.bottomAnchor.constraint(equalTo: stackView.bottomAnchor)
-        
         ])
     }
 }

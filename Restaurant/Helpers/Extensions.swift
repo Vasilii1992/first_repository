@@ -1,8 +1,5 @@
 
-
-
 import UIKit
-
 
 extension UIView {
     func setGradientBackground() {

@@ -11,6 +11,10 @@
 		6B06781C2BA1D58F004554F4 /* DrinkDescriptionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B06781B2BA1D58F004554F4 /* DrinkDescriptionViewController.swift */; };
 		6B0AC1012B6D0B9B005EBBAD /* FoodCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B0AC1002B6D0B9B005EBBAD /* FoodCategory.swift */; };
 		6B2CE1922B6E755300A8656A /* ProductDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B2CE1912B6E755300A8656A /* ProductDetailViewController.swift */; };
+		6B3C985A2C04831800EC33C4 /* FirebaseDatabase in Frameworks */ = {isa = PBXBuildFile; productRef = 6B3C98592C04831800EC33C4 /* FirebaseDatabase */; };
+		6B3C985C2C04831800EC33C4 /* FirebaseDatabaseSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 6B3C985B2C04831800EC33C4 /* FirebaseDatabaseSwift */; };
+		6B3C985E2C04831800EC33C4 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 6B3C985D2C04831800EC33C4 /* FirebaseFirestore */; };
+		6B3C98602C04831800EC33C4 /* FirebaseFirestoreSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 6B3C985F2C04831800EC33C4 /* FirebaseFirestoreSwift */; };
 		6B50C8E72BFB7A67004B13D7 /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = 6B50C8E62BFB7A67004B13D7 /* Lottie */; };
 		6B6FA7912B987EA200E33D20 /* MenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B6FA7902B987EA200E33D20 /* MenuViewController.swift */; };
 		6B8CC9D22BE5185900C5BE43 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6B8CC9D12BE5185900C5BE43 /* GoogleService-Info.plist */; };
@@ -42,7 +46,6 @@
 		6BEBD0332B6922F100A27773 /* CategoryCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BEBD0322B6922F100A27773 /* CategoryCollectionViewCell.swift */; };
 		6BEBD0352B69230200A27773 /* ExampleCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BEBD0342B69230200A27773 /* ExampleCollectionViewCell.swift */; };
 		6BEBD0372B6A45A200A27773 /* HeaderSupplementaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BEBD0362B6A45A200A27773 /* HeaderSupplementaryView.swift */; };
-		D7A699C9A9A9F84D6ABD6FDD /* Pods_Restaurant.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C232F2D81253B57D7F1C8FD8 /* Pods_Restaurant.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -50,6 +53,7 @@
 		6B06781B2BA1D58F004554F4 /* DrinkDescriptionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrinkDescriptionViewController.swift; sourceTree = "<group>"; };
 		6B0AC1002B6D0B9B005EBBAD /* FoodCategory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodCategory.swift; sourceTree = "<group>"; };
 		6B2CE1912B6E755300A8656A /* ProductDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductDetailViewController.swift; sourceTree = "<group>"; };
+		6B3C98612C0484EB00EC33C4 /* Restaurant.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; name = Restaurant.app; path = "/Users/vasilii_tikhonov/Desktop/menu/build/Debug-iphoneos/Restaurant.app"; sourceTree = "<absolute>"; };
 		6B6FA7902B987EA200E33D20 /* MenuViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuViewController.swift; sourceTree = "<group>"; };
 		6B8CC9D12BE5185900C5BE43 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		6B8CC9DE2BE52EA500C5BE43 /* APIManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIManager.swift; sourceTree = "<group>"; };
@@ -67,7 +71,6 @@
 		6BCE98622BFB93C1009EE363 /* thirdScreen.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = thirdScreen.json; sourceTree = "<group>"; };
 		6BEA972A2B9743E20032C34A /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		6BEA972E2B9747650032C34A /* CustomSegmentedControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomSegmentedControl.swift; sourceTree = "<group>"; };
-		6BEBD0122B69039100A27773 /* Restaurant.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Restaurant.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6BEBD0152B69039100A27773 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		6BEBD0172B69039100A27773 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		6BEBD0192B69039100A27773 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -81,9 +84,6 @@
 		6BEBD0322B6922F100A27773 /* CategoryCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryCollectionViewCell.swift; sourceTree = "<group>"; };
 		6BEBD0342B69230200A27773 /* ExampleCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExampleCollectionViewCell.swift; sourceTree = "<group>"; };
 		6BEBD0362B6A45A200A27773 /* HeaderSupplementaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderSupplementaryView.swift; sourceTree = "<group>"; };
-		83BE3785A28DFA4E246D8E81 /* Pods-Restaurant.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Restaurant.release.xcconfig"; path = "Target Support Files/Pods-Restaurant/Pods-Restaurant.release.xcconfig"; sourceTree = "<group>"; };
-		A0D4C9D0E2C2872788667ADE /* Pods-Restaurant.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Restaurant.debug.xcconfig"; path = "Target Support Files/Pods-Restaurant/Pods-Restaurant.debug.xcconfig"; sourceTree = "<group>"; };
-		C232F2D81253B57D7F1C8FD8 /* Pods_Restaurant.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Restaurant.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -91,24 +91,19 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6B3C985C2C04831800EC33C4 /* FirebaseDatabaseSwift in Frameworks */,
 				6BC41E7D2B9DCD09008F9D4A /* SDWebImageMapKit in Frameworks */,
 				6BC41E7B2B9DCD09008F9D4A /* SDWebImage in Frameworks */,
-				D7A699C9A9A9F84D6ABD6FDD /* Pods_Restaurant.framework in Frameworks */,
+				6B3C98602C04831800EC33C4 /* FirebaseFirestoreSwift in Frameworks */,
+				6B3C985A2C04831800EC33C4 /* FirebaseDatabase in Frameworks */,
 				6B50C8E72BFB7A67004B13D7 /* Lottie in Frameworks */,
+				6B3C985E2C04831800EC33C4 /* FirebaseFirestore in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		5E2DCF65FB73946D7780F6D1 /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				C232F2D81253B57D7F1C8FD8 /* Pods_Restaurant.framework */,
-			);
-			name = Frameworks;
-			sourceTree = "<group>";
-		};
 		6B0678172BA1C8D8004554F4 /* Animations */ = {
 			isa = PBXGroup;
 			children = (
@@ -240,18 +235,7 @@
 			isa = PBXGroup;
 			children = (
 				6BEBD0142B69039100A27773 /* Restaurant */,
-				6BEBD0132B69039100A27773 /* Products */,
-				B033EB2861F53D5BB438B06F /* Pods */,
-				5E2DCF65FB73946D7780F6D1 /* Frameworks */,
 			);
-			sourceTree = "<group>";
-		};
-		6BEBD0132B69039100A27773 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				6BEBD0122B69039100A27773 /* Restaurant.app */,
-			);
-			name = Products;
 			sourceTree = "<group>";
 		};
 		6BEBD0142B69039100A27773 /* Restaurant */ = {
@@ -279,15 +263,6 @@
 			path = Cells;
 			sourceTree = "<group>";
 		};
-		B033EB2861F53D5BB438B06F /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				A0D4C9D0E2C2872788667ADE /* Pods-Restaurant.debug.xcconfig */,
-				83BE3785A28DFA4E246D8E81 /* Pods-Restaurant.release.xcconfig */,
-			);
-			path = Pods;
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -295,11 +270,9 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 6BEBD0262B69039200A27773 /* Build configuration list for PBXNativeTarget "Restaurant" */;
 			buildPhases = (
-				98CD5F8971CB518BCCB3C9B6 /* [CP] Check Pods Manifest.lock */,
 				6BEBD00E2B69039100A27773 /* Sources */,
 				6BEBD00F2B69039100A27773 /* Frameworks */,
 				6BEBD0102B69039100A27773 /* Resources */,
-				DB5C310B3102642CF7F84917 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -310,9 +283,13 @@
 				6BC41E7A2B9DCD09008F9D4A /* SDWebImage */,
 				6BC41E7C2B9DCD09008F9D4A /* SDWebImageMapKit */,
 				6B50C8E62BFB7A67004B13D7 /* Lottie */,
+				6B3C98592C04831800EC33C4 /* FirebaseDatabase */,
+				6B3C985B2C04831800EC33C4 /* FirebaseDatabaseSwift */,
+				6B3C985D2C04831800EC33C4 /* FirebaseFirestore */,
+				6B3C985F2C04831800EC33C4 /* FirebaseFirestoreSwift */,
 			);
 			productName = menu;
-			productReference = 6BEBD0122B69039100A27773 /* Restaurant.app */;
+			productReference = 6B3C98612C0484EB00EC33C4 /* Restaurant.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -343,8 +320,9 @@
 			packageReferences = (
 				6BC41E792B9DCD09008F9D4A /* XCRemoteSwiftPackageReference "SDWebImage" */,
 				6B50C8E52BFB7A67004B13D7 /* XCRemoteSwiftPackageReference "lottie-ios" */,
+				6B3C98582C04831800EC33C4 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 			);
-			productRefGroup = 6BEBD0132B69039100A27773 /* Products */;
+			productRefGroup = 6BEBD0092B69039100A27773;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
@@ -369,48 +347,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
-
-/* Begin PBXShellScriptBuildPhase section */
-		98CD5F8971CB518BCCB3C9B6 /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-Restaurant-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		DB5C310B3102642CF7F84917 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Restaurant/Pods-Restaurant-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Restaurant/Pods-Restaurant-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Restaurant/Pods-Restaurant-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		6BEBD00E2B69039100A27773 /* Sources */ = {
@@ -591,7 +527,6 @@
 		};
 		6BEBD0272B69039200A27773 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = A0D4C9D0E2C2872788667ADE /* Pods-Restaurant.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -620,7 +555,6 @@
 		};
 		6BEBD0282B69039200A27773 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 83BE3785A28DFA4E246D8E81 /* Pods-Restaurant.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -671,6 +605,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		6B3C98582C04831800EC33C4 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 10.26.0;
+			};
+		};
 		6B50C8E52BFB7A67004B13D7 /* XCRemoteSwiftPackageReference "lottie-ios" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/airbnb/lottie-ios.git";
@@ -690,6 +632,26 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		6B3C98592C04831800EC33C4 /* FirebaseDatabase */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 6B3C98582C04831800EC33C4 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseDatabase;
+		};
+		6B3C985B2C04831800EC33C4 /* FirebaseDatabaseSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 6B3C98582C04831800EC33C4 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseDatabaseSwift;
+		};
+		6B3C985D2C04831800EC33C4 /* FirebaseFirestore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 6B3C98582C04831800EC33C4 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseFirestore;
+		};
+		6B3C985F2C04831800EC33C4 /* FirebaseFirestoreSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 6B3C98582C04831800EC33C4 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseFirestoreSwift;
+		};
 		6B50C8E62BFB7A67004B13D7 /* Lottie */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 6B50C8E52BFB7A67004B13D7 /* XCRemoteSwiftPackageReference "lottie-ios" */;
