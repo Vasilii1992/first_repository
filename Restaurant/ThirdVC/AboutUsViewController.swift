@@ -5,7 +5,7 @@ import Lottie
 final class AboutUsViewController: UIViewController {
     
     private let animationView: LottieAnimationView = {
-        let animationView = LottieAnimationView(name: "thirdScreen")
+        let animationView = LottieAnimationView(name: Resources.LoaderAnimationView.thirdScreen)
         animationView.loopMode = .loop
         animationView.translatesAutoresizingMaskIntoConstraints = false
         return animationView

@@ -47,7 +47,7 @@ final class ExampleCollectionViewCell: UICollectionViewCell {
     }()
     
     private let loaderAnimationView: LottieAnimationView = {
-        let animationView = LottieAnimationView(name: "Loader")
+        let animationView = LottieAnimationView(name: Resources.LoaderAnimationView.loader)
         animationView.loopMode = .loop
         animationView.translatesAutoresizingMaskIntoConstraints = false
         return animationView

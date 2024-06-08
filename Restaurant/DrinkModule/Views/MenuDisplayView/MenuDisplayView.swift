@@ -4,7 +4,7 @@ import Firebase
 import Lottie
 
 
-final class MenuDisplayViewController: UIViewController {
+final class MenuDisplayView: UIViewController,MenuViewProtocol {
     
     private var firebaseDrinks: [FirebaseDrink] = []
     private var hasLoadedOnce = false
@@ -14,7 +14,7 @@ final class MenuDisplayViewController: UIViewController {
     
     
     private let loaderAnimationView: LottieAnimationView = {
-        let animationView = LottieAnimationView(name: "LoaderForBar")
+        let animationView = LottieAnimationView(name: Resources.LoaderAnimationView.loaderForBar)
         animationView.loopMode = .loop
         animationView.translatesAutoresizingMaskIntoConstraints = false
         return animationView
@@ -37,42 +37,65 @@ final class MenuDisplayViewController: UIViewController {
         setupViews()
         setupConstraints()
         
-        fetchDataFromFirebase(selectedIndex: 0)
+       // fetchDataFromFirebase(selectedIndex: 0)
     }
 
-    func fetchDataFromFirebase(selectedIndex: Int) {
-           if !hasLoadedOnce {
-               DispatchQueue.main.async {
-                   self.loaderAnimationView.isHidden = false
-                   self.loaderAnimationView.play()
-               }
-               hasLoadedOnce = true
-           }
-           
-           let collectionName = selectedIndex == 0 ? alcoKey : nonAlcoKey
-
-           APIManager.shared.fetchDrinksData(collectionName: collectionName) { [weak self] drinks, error in
-               guard let self = self else { return }
-
-               DispatchQueue.main.async {
-                   self.loaderAnimationView.stop()
-                   self.loaderAnimationView.isHidden = true
-                   
-                   if let error = error {
-                       print("Error getting documents: \(error)")
-                       return
-                   }
-
-                   guard let drinks = drinks else {
-                       print("No documents")
-                       return
-                   }
-
-                   self.firebaseDrinks = drinks
-                   self.myTableView.reloadData()
-               }
+//    func fetchDataFromFirebase(selectedIndex: Int) {
+//           if !hasLoadedOnce {
+//               DispatchQueue.main.async {
+//                   self.loaderAnimationView.isHidden = false
+//                   self.loaderAnimationView.play()
+//               }
+//               hasLoadedOnce = true
+//           }
+//           
+//           let collectionName = selectedIndex == 0 ? alcoKey : nonAlcoKey
+//
+//           APIManager.shared.fetchDrinksData(collectionName: collectionName) { [weak self] drinks, error in
+//               guard let self = self else { return }
+//
+//               DispatchQueue.main.async {
+//                   self.loaderAnimationView.stop()
+//                   self.loaderAnimationView.isHidden = true
+//                   
+//                   if let error = error {
+//                       print("Error getting documents: \(error)")
+//                       return
+//                   }
+//
+//                   guard let drinks = drinks else {
+//                       print("No documents")
+//                       return
+//                   }
+//
+//                   self.firebaseDrinks = drinks
+//                   self.myTableView.reloadData()
+//               }
+//           }
+//       }
+    func showLoader() {
+           DispatchQueue.main.async {
+               self.loaderAnimationView.isHidden = false
+               self.loaderAnimationView.play()
            }
        }
+       
+       func hideLoader() {
+           DispatchQueue.main.async {
+               self.loaderAnimationView.stop()
+               self.loaderAnimationView.isHidden = true
+           }
+       }
+       
+       func updateDrinkList(_ drinks: [FirebaseDrink]) {
+           DispatchQueue.main.async {
+               self.firebaseDrinks = drinks
+               self.myTableView.reloadData()
+           }
+       }
+    func showError(_ error: Error) {
+        print("Error: \(error.localizedDescription)")
+    }
 
    private func setupViews() {
         self.view.addSubview(myTableView)
@@ -103,7 +126,7 @@ final class MenuDisplayViewController: UIViewController {
         ])
     }
 }
-extension MenuDisplayViewController: UITableViewDelegate {
+extension MenuDisplayView: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return 50
     }
@@ -118,7 +141,7 @@ extension MenuDisplayViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
                 let selectedDrink = firebaseDrinks[indexPath.section].menu[indexPath.row]
-                let drinkDescriptionVC = DrinkDescriptionViewController()
+                let drinkDescriptionVC = DrinkDescriptionView()
         drinkDescriptionVC.configureCell(imageURL: selectedDrink.images,
                                          nameL: selectedDrink.name,
                                          description: selectedDrink.description)
@@ -126,7 +149,7 @@ extension MenuDisplayViewController: UITableViewDelegate {
                 present(drinkDescriptionVC, animated: true)
         }
 }
-extension MenuDisplayViewController: UITableViewDataSource {
+extension MenuDisplayView: UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
         return firebaseDrinks.count
 
@@ -151,7 +174,7 @@ extension MenuDisplayViewController: UITableViewDataSource {
 }
 
 
-extension MenuDisplayViewController: ExpandableHeaderViewDelegate {
+extension MenuDisplayView: ExpandableHeaderViewDelegate {
 
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         var header = tableView.dequeueReusableHeaderFooterView(withIdentifier: cellIdentifier) as? ExpandableHeaderView

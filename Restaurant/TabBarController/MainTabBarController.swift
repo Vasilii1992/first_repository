@@ -3,6 +3,11 @@ import UIKit
  
 final class MainTabBarController: UITabBarController {
     
+    let foodIcon    = "frying.pan"
+    let drincIcon   = "barIcon"
+    let aboutUsIcon = "house.circle.fill"
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         generateTabBar()
@@ -11,15 +16,15 @@ final class MainTabBarController: UITabBarController {
     
     private func generateTabBar() {
         viewControllers = [
-        generateVC(viewController: ViewController(),
+        generateVC(viewController: MainView(),
                    title: Resources.Strings.TabBarTitle.food,
-                   image: UIImage(systemName: "frying.pan")),
+                   image: UIImage(systemName: foodIcon)),
         generateVC(viewController: MenuViewController(),
                    title: Resources.Strings.TabBarTitle.drink,
-                   image: UIImage(named: "barIcon")),
+                   image: UIImage(named: drincIcon)),
         generateVC(viewController: AboutUsViewController(),
                    title: Resources.Strings.TabBarTitle.aboutUS,
-                   image: UIImage(systemName: "house.circle.fill"))
+                   image: UIImage(systemName: aboutUsIcon))
 
         ]
     }
