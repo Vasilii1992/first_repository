@@ -4,8 +4,8 @@ import UIKit
 
  final class AlcoViewCell: UITableViewCell {
     
-    static let identifier = "MyCell"
-
+     static let identifier = "MyCell"
+     
     private lazy var alcoLabel: UILabel = {
         let label = UILabel()
        label.createNewLabel(text: "",
@@ -70,7 +70,8 @@ import UIKit
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        setupUI()
+        setupViews()
+        setupConstraints()
     }
     
     required init?(coder: NSCoder) {
@@ -98,7 +99,7 @@ import UIKit
     }
 
     
-    private func setupUI() {
+    private func setupViews() {
         contentView.addSubview(alcoLabel)
         contentView.addSubview(priceLabel)
         contentView.addSubview(priceLabel2)
@@ -107,38 +108,40 @@ import UIKit
         contentView.addSubview(mlLabel2)
         contentView.addSubview(mlLabel3)
         
-        
-        
-        NSLayoutConstraint.activate([
-            alcoLabel.topAnchor.constraint(equalTo: contentView.topAnchor),
-            alcoLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor,constant: 20),
-            alcoLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor,constant: 20),
-            
-            priceLabel.topAnchor.constraint(equalTo: contentView.topAnchor),
-            priceLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor,constant: 20),
-            priceLabel.leadingAnchor.constraint(equalTo: mlLabel.leadingAnchor),
-            
-            priceLabel2.topAnchor.constraint(equalTo: contentView.topAnchor),
-            priceLabel2.bottomAnchor.constraint(equalTo: contentView.bottomAnchor,constant: 20),
-            priceLabel2.leadingAnchor.constraint(equalTo: mlLabel2.leadingAnchor),
-            
-            priceLabel3.topAnchor.constraint(equalTo: contentView.topAnchor),
-            priceLabel3.bottomAnchor.constraint(equalTo: contentView.bottomAnchor,constant: 20),
-            priceLabel3.leadingAnchor.constraint(equalTo: mlLabel3.leadingAnchor),
-            
-            mlLabel.topAnchor.constraint(equalTo: contentView.topAnchor,constant: -25),
-            mlLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor,constant: 240),
-            mlLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
-            
-            mlLabel2.topAnchor.constraint(equalTo: contentView.topAnchor,constant: -25),
-            mlLabel2.leadingAnchor.constraint(equalTo: mlLabel.trailingAnchor,constant: 80),
-            mlLabel2.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
-            
-            mlLabel3.topAnchor.constraint(equalTo: contentView.topAnchor,constant: -25),
-            mlLabel3.leadingAnchor.constraint(equalTo: mlLabel2.trailingAnchor,constant: 80),
-            mlLabel3.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
+    } 
+     
+     func setupConstraints() {
+         
+         NSLayoutConstraint.activate([
+             alcoLabel.topAnchor.constraint(equalTo: contentView.topAnchor),
+             alcoLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor,constant: 20),
+             alcoLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor,constant: 20),
+             
+             priceLabel.topAnchor.constraint(equalTo: contentView.topAnchor),
+             priceLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor,constant: 20),
+             priceLabel.leadingAnchor.constraint(equalTo: mlLabel.leadingAnchor),
+             
+             priceLabel2.topAnchor.constraint(equalTo: contentView.topAnchor),
+             priceLabel2.bottomAnchor.constraint(equalTo: contentView.bottomAnchor,constant: 20),
+             priceLabel2.leadingAnchor.constraint(equalTo: mlLabel2.leadingAnchor),
+             
+             priceLabel3.topAnchor.constraint(equalTo: contentView.topAnchor),
+             priceLabel3.bottomAnchor.constraint(equalTo: contentView.bottomAnchor,constant: 20),
+             priceLabel3.leadingAnchor.constraint(equalTo: mlLabel3.leadingAnchor),
+             
+             mlLabel.topAnchor.constraint(equalTo: contentView.topAnchor,constant: -25),
+             mlLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor,constant: 240),
+             mlLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
+             
+             mlLabel2.topAnchor.constraint(equalTo: contentView.topAnchor,constant: -25),
+             mlLabel2.leadingAnchor.constraint(equalTo: mlLabel.trailingAnchor,constant: 80),
+             mlLabel2.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
+             
+             mlLabel3.topAnchor.constraint(equalTo: contentView.topAnchor,constant: -25),
+             mlLabel3.leadingAnchor.constraint(equalTo: mlLabel2.trailingAnchor,constant: 80),
+             mlLabel3.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
 
-        ])
-    }    
+         ])
+     }     
 }
 

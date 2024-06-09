@@ -1,6 +1,4 @@
 
-import Foundation
-
 
 enum ListSection {
     case sales([MenuItem])

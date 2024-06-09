@@ -1,7 +1,5 @@
 
-import UIKit
 import Firebase
-
 
 final class APIManager {
         
@@ -116,3 +114,4 @@ final class APIManager {
         }
     }
 }
+

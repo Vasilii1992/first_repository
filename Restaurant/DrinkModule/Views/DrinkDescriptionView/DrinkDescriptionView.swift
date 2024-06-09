@@ -4,7 +4,7 @@ import Lottie
 
 
 final class DrinkDescriptionView: UIViewController {
-   
+    
     private var drinkDescription: String?
     private var name: String?
 
@@ -52,6 +52,7 @@ final class DrinkDescriptionView: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+
         view.backgroundColor = .white
         setupViews()
         setupConstraints()
@@ -66,6 +67,7 @@ final class DrinkDescriptionView: UIViewController {
     }
     
     func configureCell(imageURL: String, nameL: String, description: String) {
+
         loaderAnimationView.isHidden = false
         loaderAnimationView.play()
 
@@ -97,5 +99,3 @@ final class DrinkDescriptionView: UIViewController {
     }
 
 }
-
-

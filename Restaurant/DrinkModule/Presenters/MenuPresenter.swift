@@ -22,7 +22,7 @@ final class MenuPresenter: MenuPresenterProtocol {
     
     func fetchData(selectedIndex: Int) {
         view?.showLoader()
-        let collectionName = selectedIndex == 0 ? "alcoEng".localized() : "notAlcoEng".localized()
+        let collectionName = selectedIndex == 0 ? Resources.Strings.MenuDisplayViewKey.alcoKey : Resources.Strings.MenuDisplayViewKey.nonAlcoKey
         
         apiManager.fetchDrinksData(collectionName: collectionName) { [weak self] drinks, error in
             guard let self = self else { return }

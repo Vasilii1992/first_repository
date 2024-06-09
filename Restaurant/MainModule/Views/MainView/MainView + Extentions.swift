@@ -1,9 +1,4 @@
-//
-//  ViewController + Extentions.swift
-//  Restaurant
-//
-//  Created by Василий Тихонов on 08.06.2024.
-//
+
 
 import UIKit
 

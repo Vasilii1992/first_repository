@@ -1,8 +1,4 @@
 
-import Foundation
-import Firebase
-
-
 final class MenuItem {
     let title: String
     let image: String

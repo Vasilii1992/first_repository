@@ -1,6 +1,4 @@
 
-import Foundation
-
 
 enum Resources {
     
@@ -12,7 +10,11 @@ enum Resources {
         
     }
     
-    
+    enum ReuseIdentifierForMenuDisplayView {
+        
+       static let cellIdentifier = "ExpandableHeaderView"
+        
+    }
     
     enum Links {
         static let privacyPolicy = "https://policyforrestaurant.tilda.ws/policyforrestaurant"
@@ -38,6 +40,11 @@ enum Resources {
         enum CustomSegmentedControl {
             static let alcohol = "Alcohol".localized()
             static let nonAlcohol = "Non-Alcoholic".localized()
+        }
+        
+        enum MenuDisplayViewKey {
+            static let alcoKey = "alcoEng".localized()
+            static let nonAlcoKey = "notAlcoEng".localized()
         }
         
         enum TabBarTitle {

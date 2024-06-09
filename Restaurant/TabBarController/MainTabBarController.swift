@@ -19,7 +19,7 @@ final class MainTabBarController: UITabBarController {
         generateVC(viewController: MainView(),
                    title: Resources.Strings.TabBarTitle.food,
                    image: UIImage(systemName: foodIcon)),
-        generateVC(viewController: MenuViewController(),
+        generateVC(viewController: MenuView(),
                    title: Resources.Strings.TabBarTitle.drink,
                    image: UIImage(named: drincIcon)),
         generateVC(viewController: AboutUsViewController(),
